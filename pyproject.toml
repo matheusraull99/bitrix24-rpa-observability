@@ -15,7 +15,7 @@ dependencies = ["requests>=2.31", "streamlit>=1.35"]
 painel-rpa = "observabilidade.cli:main"
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff>=0.6"]
+dev = ["pytest>=8", "ruff==0.16.5"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
