@@ -115,9 +115,8 @@ class TestContexto:
 
     def test_excecao_vira_falha_e_e_relevantada(self, registro):
         """O robo ainda precisa falhar visivelmente para o agendador."""
-        with pytest.raises(RuntimeError, match="portal fora"):
-            with registro.executando("importador"):
-                raise RuntimeError("portal fora")
+        with pytest.raises(RuntimeError, match="portal fora"), registro.executando("importador"):
+            raise RuntimeError("portal fora")
 
         gravada = registro.listar()[0]
         assert gravada.situacao is Situacao.FALHA
@@ -125,10 +124,9 @@ class TestContexto:
 
     def test_contadores_parciais_sao_gravados_na_falha(self, registro):
         """Saber que 300 entraram antes do erro muda a decisao de reprocesso."""
-        with pytest.raises(RuntimeError):
-            with registro.executando("importador") as exec_:
-                exec_.processados = 300
-                raise RuntimeError("caiu no meio")
+        with pytest.raises(RuntimeError), registro.executando("importador") as exec_:
+            exec_.processados = 300
+            raise RuntimeError("caiu no meio")
 
         assert registro.listar()[0].processados == 300
 

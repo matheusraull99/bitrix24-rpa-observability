@@ -16,8 +16,10 @@ import streamlit as st
 
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
-from observabilidade.metricas import agregar, avaliar, janela  # noqa: E402
-from observabilidade.registro import Registro, Situacao  # noqa: E402
+# Os imports abaixo ficam depois do sys.path de proposito: o painel roda via
+# `streamlit run painel.py`, da raiz do repo, sem o pacote instalado.
+from observabilidade.metricas import agregar, avaliar, janela
+from observabilidade.registro import Registro, Situacao
 
 CORES = {
     Situacao.SUCESSO: "🟢",
